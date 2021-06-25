@@ -1,5 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
 .navbar {
-  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  background: #3b3e43;
+  width: 100vw;
   height: 80px;
   display: flex;
   justify-content: center;
@@ -22,14 +25,21 @@
   color: #fff;
   justify-self: start;
   margin-left: 20px;
+  margin-bottom: 16px;
   cursor: pointer;
   text-decoration: none;
   font-size: 2rem;
   display: flex;
   align-items: center;
+  font-family: "Roboto";
+  transition: all 0.1s ease-in;
+}
+.navbar-logo:hover {
+  color: #eaeaea;
+  transform: scale(1.1, 1.1);
 }
 
-.fa-typo3 {
+.fa-envelope-open {
   margin-left: 0.5rem;
   font-size: 1.8rem;
 }
@@ -50,8 +60,9 @@
 }
 
 .nav-links {
-  color: #fff;
+  color: #eaeaea;
   display: flex;
+  font-family: "Poppins";
   align-items: center;
   text-decoration: none;
   padding: 0.5rem 1rem;
@@ -59,7 +70,8 @@
 }
 
 .nav-links:hover {
-  border-bottom: 4px solid #fff;
+  border-bottom: 4px solid #eaeaea;
+  color: #eaeaea;
   transition: all 0.2s ease-out;
 }
 

@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { Button } from "../Button/Button";
+
 import "./Navbar.css";
 
 const Navbar = () => {
   const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-
-  const showButton = () => {
-    if (window.innerWidth <= 960) {
-      setButton(false);
-    } else {
-      setButton(true);
-    }
-  };
-
-  window.addEventListener("resize", showButton);
 
   return (
     <React.Fragment>
@@ -30,7 +19,7 @@ const Navbar = () => {
             className="navbar-logo"
             onClick={closeMobileMenu}
           >
-            TRVL <i className="fab fa-typo3"></i>
+            MAILS24 <i class="fas fa-envelope-open"></i>
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"} />
@@ -43,33 +32,32 @@ const Navbar = () => {
             </li>
             <li className="nav-item">
               <Link
-                to="/services"
+                to="/history"
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
-                Services
+                History
               </Link>
             </li>
             <li className="nav-item">
               <Link
-                to="/products"
+                to="/compose"
                 className="nav-links"
                 onClick={closeMobileMenu}
               >
-                Products
+                Compose
               </Link>
             </li>
             <li className="nav-item">
               <Link
                 to="/sign-up"
-                className="nav-links-mobile"
+                className="nav-links"
                 onClick={closeMobileMenu}
               >
-                Sign Up
+                Sign Up/Log In
               </Link>
             </li>
           </ul>
-          {/* {button && <Button buttonStyle="btn--outline">SIGN UP</Button>} */}
         </div>
       </nav>
     </React.Fragment>
