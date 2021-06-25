@@ -1,11 +1,11 @@
 import "./App.css";
-import Login from "./components/Login/Login";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import LoginPage from "./components/LoginPage/LoginPage";
 
 function App() {
   return (
     <div className="App">
-      Hello
-      <Login />
+      <LoginPage />
     </div>
   );
 }

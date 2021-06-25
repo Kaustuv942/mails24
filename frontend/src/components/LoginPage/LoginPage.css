@@ -1,0 +1,29 @@
+#card {
+  display: flex;
+  background-color: #eaeaea;
+  height: 400px;
+  border-radius: 10px;
+  margin-top: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.LIbtns {
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.LIbtns-container {
+  margin-bottom: 40px;
+}
+.enabled {
+  border-bottom: 2px solid #3a3d42;
+}
+#g-btn {
+  background-color: #d92c24;
+  transition: all 0.1s ease-in;
+  border: none;
+}
+#g-btn:hover {
+  background-color: #9c251e;
+}

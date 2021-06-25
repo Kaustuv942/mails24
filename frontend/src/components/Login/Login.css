@@ -1,3 +1,38 @@
-h1 {
-  color: red;
+.redmarker {
+  border: 0.5px solid red;
+}
+label {
+  text-transform: uppercase;
+}
+input {
+  background-color: #dad8d9;
+  width: 90%;
+  border-radius: 5px;
+  border: none;
+  height: 32px;
+}
+input:focus {
+  background-color: #fff;
+  color: #3b3e43;
+  border-bottom: 1px solid #3b3e43;
+}
+input:focus-visible {
+  border: none;
+}
+.login-buttons {
+  font-weight: 500;
+  width: 80%;
+  margin-top: 20px;
+  border-radius: 10px;
+  color: white;
+  height: 40px;
+}
+
+#sub-btn {
+  text-transform: uppercase;
+  background-color: #3b3e43;
+  transition: all 0.1s ease-in;
+}
+#sub-btn:hover {
+  background-color: #1b1b1d;
 }
