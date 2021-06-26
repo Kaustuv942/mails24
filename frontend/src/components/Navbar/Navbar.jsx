@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 
 import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [click, setClick] = useState(false);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+  const handleLogout = () => {
+    props.handleLogIn();
+  };
 
   return (
     <React.Fragment>
@@ -49,13 +53,19 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link
-                to="/sign-up"
-                className="nav-links"
-                onClick={closeMobileMenu}
-              >
-                Sign Up/Log In
-              </Link>
+              {!props.isLoggedIn ? (
+                <Link
+                  to="/sign-up"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Sign Up/Log In
+                </Link>
+              ) : (
+                <Link to="/" onClick={handleLogout} className="nav-links">
+                  Logout
+                </Link>
+              )}
             </li>
           </ul>
         </div>

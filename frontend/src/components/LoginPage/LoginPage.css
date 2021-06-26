@@ -1,13 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap");
+
 #card {
   display: flex;
   background-color: #eaeaea;
-  height: 400px;
+  height: 450px;
   border-radius: 10px;
-  margin-top: 50px;
+  margin-top: 35px;
+  margin-bottom: 20px;
   justify-content: center;
   align-items: center;
 }
 
+#logoTagline {
+  color: #3b3e43;
+  font-weight: 500;
+  font-size: 1.5em;
+  font-family: "Poppins";
+}
 .LIbtns {
   cursor: pointer;
   text-transform: uppercase;
