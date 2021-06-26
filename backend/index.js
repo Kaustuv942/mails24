@@ -1,7 +1,14 @@
+let express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-let express = require('express')
+const User = require('./models/User');
 
 let app = express();
+app.use(cors());
+app.use(express.json());
 
 var port = process.env.PORT || 8080;
 
@@ -13,8 +20,9 @@ app.listen(port, function() {
 })
 
 
+
 const { MongoClient } = require('mongodb');
-const uri = "mongodb+srv://admin:password@msgscheduler.r00cg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const uri = "mongodb+srv://admin:admin@msgscheduler.r00cg.mongodb.net/FLIPRMSGSCHEDULER?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const collection = client.db("test").collection("devices");
@@ -52,21 +60,21 @@ let transporter = nodemailer.createTransport({
 // };
 
 /// THIS WORKS::
-transporter.sendMail({
-  from: 'apsingh1843@gmail.com',
-  to: 'kaustuv942@gmail.com',
-  // cc:'kkc.19u10500@btech.nitdgp.ac.in',
-  // bcc:'kaustuv942@gmail.com',
-  subject: 'Flipr Mailer Works: Revision 2',
-  text: 'Send Mail Api Works',
-  auth: {
-      user: 'apsingh1843@gmail.com',
-    //   refreshToken: '1//04PeaRRxQepXfCgYIARAAGAQSNwF-L9IroDPofc1F4M8a0E-scC550DnVy5h_hOAs9WowULZYaUW42owSILtat4EYUK0YS-_5NKQ',
-      accessToken: 'ya29.a0AfH6SMBgm-vsyqZ8zw9HHs4wX2V4zm3csaRmKTLWyDRDIhmf0AUlK02v3bbetDCC_tHcUhsxg1B-Sra913vwlXIWCCJ1N0XBqgJyo4PucRmyDKsOLGepkhs1STiprvOxcBJUPt5c_ZPXJsrgSHVNLPD850bL',
+// transporter.sendMail({
+//   from: 'apsingh1843@gmail.com',
+//   to: 'kaustuv942@gmail.com',
+//   // cc:'kkc.19u10500@btech.nitdgp.ac.in',
+//   // bcc:'kaustuv942@gmail.com',
+//   subject: 'Flipr Mailer Works: Revision 2',
+//   text: 'Send Mail Api Works',
+//   auth: {
+//       user: 'apsingh1843@gmail.com',
+//     //   refreshToken: '1//04PeaRRxQepXfCgYIARAAGAQSNwF-L9IroDPofc1F4M8a0E-scC550DnVy5h_hOAs9WowULZYaUW42owSILtat4EYUK0YS-_5NKQ',
+//       accessToken: 'ya29.a0AfH6SMBgm-vsyqZ8zw9HHs4wX2V4zm3csaRmKTLWyDRDIhmf0AUlK02v3bbetDCC_tHcUhsxg1B-Sra913vwlXIWCCJ1N0XBqgJyo4PucRmyDKsOLGepkhs1STiprvOxcBJUPt5c_ZPXJsrgSHVNLPD850bL',
       
-      // expires: 1484314697598
-  }
-});
+//       // expires: 1484314697598
+//   }
+// });
 
 
 
@@ -86,11 +94,11 @@ var x= 1;
 var y = 1;
 const url_taskMap = {};
 const str = '* * * * * *'
-const task = cron.schedule(str,()=>{
-    console.log('sendMail'+x)
-    x+=1
-});
-url_taskMap['xyz'] = task;
+// const task = cron.schedule(str,()=>{
+//     console.log('sendMail'+x)
+//     x+=1
+// });
+// url_taskMap['xyz'] = task;
 // const task3 = cron.schedule('*/3 * * * * *',()=>{
 //     console.log('3Seconds test'+x)
 //     x+=1
@@ -126,3 +134,88 @@ a. url_taskmap -->
 
 
 */
+mongoose.connect(uri,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log('mongodb connected...')
+})
+.catch(err => console.log(err))
+
+//register user
+const jwtSecret = 'jwtSecret';
+
+app.post('/api/register', (req, res) => {
+  //res.send('register');
+  const { name, email, password } = req.body;
+
+  User.findOne({ email })
+   .then(user => {
+     if (user) return res.status(400).json({ msg: 'User already exists'});
+     const newUser = new User({
+       name,
+       email,
+       password
+     });
+
+     bcrypt.genSalt(10, (err, salt) =>{
+       bcrypt.hash(newUser.password, salt, (err, hash) =>{
+         if (err) throw err;
+         newUser.password = hash;
+         newUser.save()
+         .then(user => {
+
+           jwt.sign(
+             { id: user.id },
+             jwtSecret,
+             { expiresIn: 3600 },
+             (err, token) => {
+               if (err) throw err;
+               res.json({
+                token,
+                user: {
+                  id: user.id,
+                  name: user.name,
+                  email: user.email
+                }
+               });
+             }
+           )
+         });
+       })
+     })
+   })
+});
+
+//login
+app.post('/api/login', (req, res) => {
+  //res.send('login');
+  const { email, password } = req.body;
+
+  User.findOne({ email })
+    .then(user => {
+      if (!user) return res.status(400).json({ msg: 'User does not exists'});
+
+      bcrypt.compare(password, user.password)
+        .then(isMatch => {
+          if(!isMatch) return res.status(400).json({ msg: 'Invalid Credentials'});
+          jwt.sign(
+            { id: user.id },
+            jwtSecret,
+            { expiresIn: 3600 },
+            (err, token) => {
+              if (err) throw err;
+              res.json({
+               token,
+               user: {
+                 id: user.id,
+                 name: user.name,
+                 email: user.email
+               }
+              });
+            }
+          )
+        })
+   })
+});
