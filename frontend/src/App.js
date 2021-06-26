@@ -1,17 +1,43 @@
-import './App.css';
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
 import { Home } from './components/Home/Home Jsx/Home';
 import {Compose} from './components/Compose/Compose Jsx/Compose'
-import {BrowserRouter,Route,Switch} from 'react-router-dom'
+
+import "./App.css";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import SignInPage from "./components/LoginPage/SignInPage";
+import Navbar from "./components/Navbar/Navbar";
+import HomePage from "./components/HomePage";
+import HistoryPage from "./components/HistoryPage";
+import ComposePage from "./components/ComposePage";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useState } from "react";
+
+
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLogIn = () => {
+    setIsLoggedIn(!isLoggedIn);
+  };
+
   return (
     <div className="App">
-      <BrowserRouter>
-      <Switch>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/compose' component={Compose} />
-      </Switch>
-      </BrowserRouter>
+      <Router>
+        <Navbar isLoggedIn={isLoggedIn} handleLogIn={handleLogIn} />
+        <Switch>
+          <Route path="/" exact>
+            <HomePage isLoggedIn={isLoggedIn} handleLogIn={handleLogIn} />
+          </Route>
+          <Route path="/history">
+            <HistoryPage isLoggedIn={isLoggedIn} handleLogIn={handleLogIn} />
+          </Route>
+          <Route path="/compose">
+            <ComposePage isLoggedIn={isLoggedIn} handleLogIn={handleLogIn} />
+          </Route>
+          <Route path="/sign-up">
+            <SignInPage isLoggedIn={isLoggedIn} handleLogIn={handleLogIn} />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
