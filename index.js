@@ -15,7 +15,7 @@ let app = express();
 app.use(cors());
 app.use(express.json());
 
-var port = process.env.PORT || 8080;
+const port = process.env.PORT || 80;
 
 app.get("/", (req, res) => res.send("Welcome to Express 1.0"));
 
