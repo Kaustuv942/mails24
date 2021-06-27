@@ -33,6 +33,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: rgb(59, 62, 67);
 }
 .subjectHome {
   color: black;
@@ -53,6 +54,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: rgb(59, 62, 67);
 }
 .scheduleHome {
   color: black;
@@ -70,6 +72,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: rgb(59, 62, 67);
 }
 @media screen and (max-width: 900px) {
   .contentCBox {

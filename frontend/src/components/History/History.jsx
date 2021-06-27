@@ -40,7 +40,7 @@ const History = () => {
             onChange={(e) => {
               setSearch(e.target.value);
             }}
-            placeholder="Search in mail.."
+            placeholder="Search in HISTORY"
           />
         </div>
         <div className="container historyContainer0 historyContainers">

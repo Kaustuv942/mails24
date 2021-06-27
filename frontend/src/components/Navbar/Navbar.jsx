@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import "./Navbar.css";
 
@@ -30,41 +30,50 @@ const Navbar = (props) => {
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+              <NavLink
+              exact
+                to="/"
+                activeClassName="GG"
+                className="nav-links"
+                onClick={closeMobileMenu}
+              >
                 Home
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link
+              <NavLink exact 
                 to="/history"
                 className="nav-links"
+                activeClassName="GG"
                 onClick={closeMobileMenu}
               >
                 History
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link
+              <NavLink exact 
                 to="/compose"
                 className="nav-links"
                 onClick={closeMobileMenu}
+                activeClassName="GG"
               >
                 Compose
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
               {!props.isLoggedIn ? (
-                <Link
+                <NavLink
                   to="/sign-up"
                   className="nav-links"
+                  activeClassName="GG"
                   onClick={closeMobileMenu}
                 >
                   Sign Up/Log In
-                </Link>
+                </NavLink>
               ) : (
-                <Link to="/" onClick={handleLogout} className="nav-links">
+                <NavLink  exact to="/" onClick={handleLogout} className="nav-links">
                   Logout
-                </Link>
+                </NavLink>
               )}
             </li>
           </ul>

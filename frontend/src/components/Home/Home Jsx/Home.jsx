@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "../Home css/Home.css";
 import { Content } from "./Content";
 import data from "../../data.json";
+
 import { FaSearch } from "react-icons/fa";
+import Modal from "../../Modal/Modal";
 
 export const Home = () => {
   //   console.log(data);
@@ -21,10 +23,12 @@ export const Home = () => {
   }).map((res) => {
     return (
       <Content
-        name={res.name}
+        recipient={res.name}
         key={res.id}
         subject={res.subject}
         scheduled={res.scheduled}
+        cc={res.cc}
+        body={res.body}
       />
     );
   });
@@ -32,6 +36,7 @@ export const Home = () => {
   return (
     <div>
       <div className="homeBackground"></div>
+
       <div className="container mainContainer homeContainers">
         <div className="search">
           <FaSearch className="searchIcon" />
@@ -40,7 +45,7 @@ export const Home = () => {
             onChange={(e) => {
               setSearch(e.target.value);
             }}
-            placeholder="Search in mail.."
+            placeholder="Search in HOME"
           />
         </div>
         <div className="container homeContainer0 homeContainers">

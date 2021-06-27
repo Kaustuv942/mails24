@@ -40,6 +40,18 @@ export const Weekly = ({ recipient, cc, subject, body }) => {
       alert("Mail Body Cannot Be Empty");
       return false;
     } else {
+      if (
+        dayWeek.length === 0 ||
+        timeWeek.length === 0 ||
+        maxWeek.length === 0
+      ) {
+        alert("Please fill all the scheduling fields");
+        return false;
+      }
+      if (maxWeek <= 0) {
+        alert("Number of mails to be sent cannot be negative or 0");
+        return false;
+      }
       Obj = {
         mail: {
           to: recipient.replace(/\s+/g, ""),
@@ -71,13 +83,13 @@ export const Weekly = ({ recipient, cc, subject, body }) => {
           <option value="null" disabled selected>
             Day
           </option>
-          <option value="Monday">Monday</option>
-          <option value="Tuesday">Tuesday</option>
-          <option value="Wednesday">Wednesday</option>
-          <option value="Thurday">Thursday</option>
-          <option value="Friday">Friday</option>
-          <option value="Saturday">Saturday</option>
-          <option value="Sunday">Sunday</option>
+          <option value="Mon">Monday</option>
+          <option value="Tues">Tuesday</option>
+          <option value="Wednes">Wednesday</option>
+          <option value="Thur">Thursday</option>
+          <option value="Fri">Friday</option>
+          <option value="Satur">Saturday</option>
+          <option value="Sun">Sunday</option>
         </select>
         <input
           type="time"
