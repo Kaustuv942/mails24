@@ -9,6 +9,7 @@
   align-items: center;
   margin: 15px 0px;
   flex-direction: row;
+  cursor: pointer;
 }
 .recipientHistory {
   color: #3b3e43;

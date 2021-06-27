@@ -11,22 +11,33 @@
   z-index: 99999;
   border-radius: 5px;
   font-family: "Poppins", sans-serif;
+  transition: all 0.5s ease;
 }
 .ModalHead {
   position: absolute;
   top: 10px;
-  left: 15px;
+  left: 40px;
   font-size: 1.2rem;
+  max-width: 70%;
+}
+.ModalHead p {
+  background-color: rgb(218, 216, 217);
+  padding: 8px 10px;
+  border-radius: 8px;
 }
 .Modalcc {
   position: absolute;
-  top: 40px;
-  left: 15px;
+  top: 60px;
+  margin: 10px 0;
+  left: 40px;
   font-size: 1.2rem;
+  background-color: rgb(218, 216, 217);
+  padding: 6px 10px;
+  border-radius: 6px;
+  max-width: 70%;
 }
-.ModalMain {
-  position: relative;
-  top: -120px;
+.Modalcc p {
+  margin: 0;
 }
 .cut {
   position: absolute;
@@ -34,4 +45,69 @@
   top: 15px;
   right: 20px;
   transform: scale(1.5);
+  cursor: pointer;
+}
+.true {
+  display: block;
+  position: fixed;
+  inset: 0;
+  top: 15%;
+  bottom: 3%;
+  left: 10%;
+  right: 10%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(188, 188, 188);
+  border: 2px solid grey;
+  z-index: 4;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+  overflow-y: scroll;
+  transition: all 0.5s ease;
+  overflow-y: scroll;
+}
+.false {
+  display: none;
+  transition: all 0.5s ease;
+}
+.ModalMain {
+  width: 80%;
+  position: absolute;
+  top: 25%;
+}
+.ModalMain p {
+  width: 100%;
+  height: max-content;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: center !important;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  padding: 10px 10px;
+  /* border: 2px solid white; */
+  margin-top: 10px;
+  margin-bottom: 30px;
+  background-color: rgb(218, 216, 217);
+}
+.ModalMain h5 {
+  font-size: 1rem;
+  text-align: start;
+  /* border: 2px solid white; */
+  padding: 20px;
+  border-radius: 6px;
+  min-height: 300px;
+  background-color: rgb(218, 216, 217);
+  letter-spacing: 0.7px;
+}
+.ModalMain h5::before {
+  content: "Mail :: ";
+}
+@media screen and (max-width: 900px) {
+  .true {
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
 }

@@ -25,18 +25,18 @@ export const Content = ({ recipient, id, subject, scheduled, cc, body }) => {
       <div className="scheduleHome">
         <p>{scheduled}</p>
       </div>
-      {/* <div className="modalContent"> */}
-      {/* <Modal
-        setShowModal={setShowModal}
-        showModal={showModal}
-        recipient={recipient}
-        key={id}
-        subject={subject}
-        scheduled={scheduled}
-        cc={cc}
-        body={body}
-      />
-      </div> */}
+      <div className="modalContent">
+        <Modal
+          setShowModal={setShowModal}
+          showModal={showModal}
+          recipient={recipient}
+          key={id}
+          subject={subject}
+          scheduled={scheduled}
+          cc={cc}
+          body={body}
+        />
+      </div>
     </div>
   );
 };
