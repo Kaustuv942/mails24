@@ -22,13 +22,13 @@ function App() {
           <Route path="/" exact>
             <HomePage isLoggedIn={isLoggedIn} handleLogIn={handleLogIn} />
           </Route>
-          <Route path="/history">
+          <Route exact path="/history">
             <HistoryPage isLoggedIn={isLoggedIn} handleLogIn={handleLogIn} />
           </Route>
-          <Route path="/compose">
+          <Route exact path="/compose">
             <ComposePage isLoggedIn={isLoggedIn} handleLogIn={handleLogIn} />
           </Route>
-          <Route path="/sign-up">
+          <Route exact path="/sign-up">
             <SignInPage isLoggedIn={isLoggedIn} handleLogIn={handleLogIn} />
           </Route>
         </Switch>

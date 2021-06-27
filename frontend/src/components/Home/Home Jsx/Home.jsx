@@ -40,7 +40,7 @@ export const Home = () => {
             onChange={(e) => {
               setSearch(e.target.value);
             }}
-            placeholder="Search in mail.."
+            placeholder="Search in HOME"
           />
         </div>
         <div className="container homeContainer0 homeContainers">

@@ -38,6 +38,14 @@ export const Recurring = ({ recipient, cc, subject, body }) => {
         alert("Mail Body Cannot Be Empty");
         return false;
       } else {
+        if (timeRec.length === 0 || maxRec.length === 0) {
+          alert("Please fill all the scheduling fields");
+          return false;
+        }
+        if (maxRec <= 0) {
+          alert("Number of mails to be sent cannot be negative or 0");
+          return false;
+        }
         Obj = {
           mail: {
             to: recipient.replace(/\s+/g, ""),

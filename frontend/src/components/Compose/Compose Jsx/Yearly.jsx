@@ -5,6 +5,7 @@ export const Yearly = ({ recipient, cc, subject, body }) => {
   const [dateYear, setDateYear] = useState("");
   const [timeYear, setTimeYear] = useState("");
   const [maxYear, setMaxYear] = useState("");
+  const [checkFeb, setCheckFeb] = useState(false);
   let Obj;
   let type = "Yearly";
   const handleClickYear = (e) => {
@@ -37,6 +38,19 @@ export const Yearly = ({ recipient, cc, subject, body }) => {
       alert("Mail Body Cannot Be Empty");
       return false;
     } else {
+      if (
+        monthYear.length === 0 ||
+        dateYear.length === 0 ||
+        timeYear.length === 0 ||
+        maxYear.length === 0
+      ) {
+        alert("Please fill all the scheduling fields");
+        return false;
+      }
+      if (maxYear <= 0) {
+        alert("Number of mails to be sent cannot be negative or 0");
+        return false;
+      }
       Obj = {
         mail: {
           to: recipient.replace(/\s+/g, ""),
@@ -56,6 +70,16 @@ export const Yearly = ({ recipient, cc, subject, body }) => {
       console.log(Obj);
     }
   };
+  const setMonthfn = (e) => {
+    // console.log(e.target.value);
+    if (e.target.value === "Feb") {
+      setCheckFeb(true);
+    } else {
+      setCheckFeb(false);
+    }
+    // console.log(checkFeb);
+    setMonthYear(e.target.value);
+  };
   return (
     <div className="contYearOut">
       <div className="monthlyContainer">
@@ -64,24 +88,24 @@ export const Yearly = ({ recipient, cc, subject, body }) => {
           id=""
           className="dateDrop"
           onChange={(e) => {
-            setMonthYear(e.target.value);
+            setMonthfn(e);
           }}
         >
           <option value="null" disabled selected>
             Month
           </option>
-          <option value="January">January</option>
-          <option value="February">February</option>
-          <option value="March">March</option>
-          <option value="April">April</option>
+          <option value="Jan">January</option>
+          <option value="Feb">February</option>
+          <option value="Mar">March</option>
+          <option value="Apr">April</option>
           <option value="May">May</option>
-          <option value="June">June</option>
-          <option value="July">July</option>
-          <option value="August">August</option>
-          <option value="September">September</option>
-          <option value="October">October</option>
-          <option value="November">November</option>
-          <option value="December">December</option>
+          <option value="Jun">June</option>
+          <option value="Jul">July</option>
+          <option value="Aug">August</option>
+          <option value="Sep">September</option>
+          <option value="Oct">October</option>
+          <option value="Nov">November</option>
+          <option value="Dec">December</option>
         </select>
         <select
           name=""
@@ -122,8 +146,12 @@ export const Yearly = ({ recipient, cc, subject, body }) => {
           <option value="26">26</option>
           <option value="27">27</option>
           <option value="28">28</option>
-          <option value="29">29</option>
-          <option value="30">30</option>
+          <option value="29" disabled={checkFeb}>
+            29
+          </option>
+          <option value="30" disabled={checkFeb}>
+            30
+          </option>
         </select>
         <input
           type="time"
@@ -136,6 +164,7 @@ export const Yearly = ({ recipient, cc, subject, body }) => {
           type="number"
           className="dropDay notimes"
           placeholder="No. of mails"
+          min="1"
           onChange={(e) => {
             setMaxYear(e.target.value);
           }}
