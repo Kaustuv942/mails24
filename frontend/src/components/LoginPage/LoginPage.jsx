@@ -27,8 +27,8 @@ const LoginPage = (props) => {
   const clientSecret = "uySD0RKc6VbMU9aHfbnunJfE";
 
   const ResponseGoogleSuccess = (response) => {
-    //console.log(response);
-    props.handleLogIn();
+    console.log(response);
+    // props.handleLogIn();
     //console.log(props.isLoggedIn);
 
     history.replace("/");
@@ -70,11 +70,9 @@ const LoginPage = (props) => {
                 Log In
               </span>
             </div>
-            <Login btnwriteup={choices[action]}></Login>
+            <Login btnwriteup={choices[action]} isLoggedIn={props.isLoggedIn} handleLogIn={props.handleLogIn}></Login>
             <GoogleLogin
               clientId={clientId}
-              accessType="offline"
-              responseType="code"
               render={(renderProps) => (
                 <button
                   onClick={renderProps.onClick}

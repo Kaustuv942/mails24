@@ -4,8 +4,9 @@ import { HistoryContent } from "./HistoryContent";
 import data from "../data.json";
 import { FaSearch } from "react-icons/fa";
 
-const History = () => {
+const History = (props) => {
   //   console.log(data);
+  const person = props.user.data.user.email
   const [Data, setData] = useState(data);
   const [search, setSearch] = useState("");
   let dataArr = Data.filter((val) => {

@@ -11,7 +11,7 @@ const HomePage = (props) => {
           purpose="redirect"
         />
       ) : (
-        <Home />
+        <Home user={props.user} />
       )}
     </>
   );

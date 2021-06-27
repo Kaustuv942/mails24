@@ -6,8 +6,9 @@ import data from "../../data.json";
 import { FaSearch } from "react-icons/fa";
 import Modal from "../../Modal/Modal";
 
-export const Home = () => {
+export const Home = (props) => {
   //   console.log(data);
+  const person = props.user.data.user.email
   const [Data, setData] = useState(data);
   const [search, setSearch] = useState("");
   let dataArr = Data.filter((val) => {
