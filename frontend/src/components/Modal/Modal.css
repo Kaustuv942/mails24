@@ -1,0 +1,37 @@
+.ModalContainer {
+  position: fixed;
+  inset: 0;
+  top: 15%;
+  bottom: 3%;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  z-index: 99999;
+  border-radius: 5px;
+  font-family: "Poppins", sans-serif;
+}
+.ModalHead {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: 1.2rem;
+}
+.Modalcc {
+  position: absolute;
+  top: 40px;
+  left: 15px;
+  font-size: 1.2rem;
+}
+.ModalMain {
+  position: relative;
+  top: -120px;
+}
+.cut {
+  position: absolute;
+  z-index: 99;
+  top: 15px;
+  right: 20px;
+  transform: scale(1.5);
+}

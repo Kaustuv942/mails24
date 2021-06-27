@@ -1,0 +1,41 @@
+.contWeekOut {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.dropDay {
+  background-color: rgb(59, 62, 67);
+  outline: none;
+  border-radius: 5px;
+  width: 120px;
+  height: 35px;
+  font-size: 1rem;
+  text-align: center;
+  padding: 0px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 2px;
+  color: white;
+  min-width: 120px;
+  margin: 10px;
+}
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.weeklyContainer {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+.notimes::placeholder {
+  color: white;
+  font-size: 0.9rem;
+  text-align: center;
+}
