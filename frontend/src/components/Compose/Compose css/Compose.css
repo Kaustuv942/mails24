@@ -1,0 +1,170 @@
+.emailBackground {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(218, 216, 217);
+  z-index: -1;
+}
+.emailForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.formItem {
+  width: 100%;
+  margin: 10px 0px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background-color: rgb(218, 216, 217);
+}
+.recipientContainer {
+  position: relative;
+  width: 100%;
+}
+.recipientContainer p {
+  position: absolute;
+  top: 18px;
+  left: 10px;
+  z-index: 1;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.recipient {
+  padding-left: 80px;
+  outline: none;
+  border-radius: 8px;
+  border: 2px solid rgb(206, 199, 199);
+  height: 40px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.7px;
+}
+.ccContainer {
+  position: relative;
+  width: 100%;
+}
+.ccContainer input {
+  height: 32px;
+  outline: none;
+  border: 2px solid rgb(192, 192, 192);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.6px;
+  height: 40px;
+}
+.ccContainer p {
+  position: absolute;
+  top: 17.5px;
+  left: 10px;
+  font-weight: 600;
+}
+.mailBody {
+  max-height: 300px;
+  min-height: 200px;
+  outline: none;
+  padding: 10px;
+  font-size: 0.8rem;
+  border: 2px solid rgb(192, 190, 190);
+}
+
+.cc {
+  padding-left: 38px;
+  outline: none;
+  height: 40px;
+}
+.subject {
+  text-align: start;
+  padding-left: 72px;
+  outline: none;
+  background-color: rgb(218, 216, 217);
+}
+.subjectContainer p {
+  top: 17px;
+  left: 10px;
+}
+.composeContainer {
+  padding-top: 20px;
+}
+.homeContainer0 {
+  padding-top: 60px;
+}
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.choose {
+  width: 170px;
+  background-color: rgb(59, 62, 67);
+  /* border: 2px solid grey; */
+  border: none;
+  border-radius: 5px;
+  color: white;
+  height: 35px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  font-weight: bold;
+  letter-spacing: 1.3px;
+  margin: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.formContainer {
+  background-color: rgb(188, 188, 188);
+  padding: 20px 80px;
+  margin-top: 20px;
+  border-radius: 12px;
+  padding-bottom: 30px;
+}
+.optionSelect {
+  width: 100%;
+  display: flex;
+  /* justify-content: space-around; */
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+}
+.scheduleBtn {
+  margin-top: 30px;
+  width: 200px;
+  height: 35px;
+  background-color: rgb(59, 62, 67);
+  outline: none;
+  border: none;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1.5px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+.mainEmailContainer {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 900px) {
+  .formContainer {
+    padding: 10px 15px;
+    padding-bottom: 20px;
+  }
+  .choose {
+    margin: 10px 10px;
+  }
+}
+@media screen and (max-width: 450px) {
+  .choose {
+    width: 40%;
+    min-width: 130px;
+    height: 40px;
+  }
+}
+.abc {
+  background-color: rgb(197, 194, 194);
+  color: rgb(59, 62, 67);
+  border: 2px solid rgb(59, 62, 67);
+  font-weight: 2000;
+}

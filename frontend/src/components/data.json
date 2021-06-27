@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Avik Ghatak",
+    "subject": "Testing mail 1 nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "scheduled": "10 July 12:00"
+  },
+  {
+    "id": 2,
+    "name": "Ramyanil Raha",
+    "subject": "Testing mail 2",
+    "scheduled": "10 July 12:00"
+  },
+
+  {
+    "id": 3,
+    "name": "KKC",
+    "subject": "Testing mail 3",
+    "scheduled": "10 July 12:00"
+  },
+  {
+    "id": 4,
+    "name": "Ayush Pratap Singh",
+    "subject": "Testing mail 4",
+    "scheduled": "10 July 12:00"
+  }
+]
