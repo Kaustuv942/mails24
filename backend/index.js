@@ -70,60 +70,67 @@ mongoose.connect(uri,{
 //register user
 const jwtSecret = 'jwtSecret';
 
-app.post('/api/register', (req, res) => {
+app.post('/signup', (req, res) => {
   //res.send('register');
-  const { name, email, password } = req.body;
-
+  const {email, password } = req.body;
+  console.log(req)
   User.findOne({ email })
    .then(user => {
-     if (user) return res.status(400).json({ msg: 'User already exists'});
-     const newUser = new User({
-       name,
-       email,
-       password
-     });
+     if (user){
+        res.status(204).json({
+          msg: "uae"
+        })
+        console.log("User already exists")
+      }
+     else{
+      const newUser = new User({
+        email,
+        password
+      });
+ 
+      bcrypt.genSalt(10, (err, salt) =>{
+        bcrypt.hash(newUser.password, salt, (err, hash) =>{
+          if (err) throw err;
+          newUser.password = hash;
+          newUser.save()
+          .then(user => {
+ 
+            jwt.sign(
+              { id: user.id },
+              jwtSecret,
+              { expiresIn: 3600 },
+              (err, token) => {
+                if (err) throw err;
+                res.status(200).json({
+                 token,
+                 user: {
+                   id: user.id,
+                   email: user.email
+                 }
+                });
+              }
+            )
+          });
+        })
+      })
+     }
+     
+   });
 
-     bcrypt.genSalt(10, (err, salt) =>{
-       bcrypt.hash(newUser.password, salt, (err, hash) =>{
-         if (err) throw err;
-         newUser.password = hash;
-         newUser.save()
-         .then(user => {
-
-           jwt.sign(
-             { id: user.id },
-             jwtSecret,
-             { expiresIn: 3600 },
-             (err, token) => {
-               if (err) throw err;
-               res.json({
-                token,
-                user: {
-                  id: user.id,
-                  name: user.name,
-                  email: user.email
-                }
-               });
-             }
-           )
-         });
-       })
-     })
-   })
 });
 
 //login
-app.post('/api/login', (req, res) => {
+app.post('/login', (req, res) => {
   //res.send('login');
   const { email, password } = req.body;
 
   User.findOne({ email })
     .then(user => {
-      if (!user) return res.status(400).json({ msg: 'User does not exists'});
+      if (!user) return res.status(203).json({ msg: 'User does not exists'});
 
       bcrypt.compare(password, user.password)
         .then(isMatch => {
-          if(!isMatch) return res.status(400).json({ msg: 'Invalid Credentials'});
+          if(!isMatch) return res.status(209).json({ msg: 'Invalid Credentials'});
           jwt.sign(
             { id: user.id },
             jwtSecret,
@@ -134,7 +141,6 @@ app.post('/api/login', (req, res) => {
                token,
                user: {
                  id: user.id,
-                 name: user.name,
                  email: user.email
                }
               });
