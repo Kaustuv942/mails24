@@ -11,7 +11,7 @@ const HistoryPage = (props) => {
           purpose="redirect"
         />
       ) : (
-        <History user={props.user}/>
+        <History />
       )}
     </>
   );

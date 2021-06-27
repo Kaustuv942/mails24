@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import Logo from "../../img/mail-send.png";
+import axios from "axios";
 // import axios from "axios";
 
 const LoginPage = (props) => {
@@ -25,9 +26,29 @@ const LoginPage = (props) => {
     "743445388880-n04uveudbms4lgl342l87ne8j3j3lkvs.apps.googleusercontent.com";
 
   const clientSecret = "uySD0RKc6VbMU9aHfbnunJfE";
+  const baseURI = "http://localhost:8080/";
 
   const ResponseGoogleSuccess = (response) => {
-    console.log(response);
+    //console.log(response);
+    axios
+      .post(`${baseURI}gmailsync`, response)
+      .then((response) => {
+        let dataObj = {
+          data: {
+            user: {
+              gId: response.data.gId,
+              id: response.data.id,
+              email: response.data.email,
+            },
+          },
+        };
+
+        props.handleLogIn();
+        props.handlePerson(dataObj);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // props.handleLogIn();
     //console.log(props.isLoggedIn);
 
@@ -71,7 +92,13 @@ const LoginPage = (props) => {
                 Log In
               </span>
             </div>
-            <Login btnwriteup={choices[action]} isLoggedIn={props.isLoggedIn} handleLogIn={props.handleLogIn}></Login>
+            <Login
+              btnwriteup={choices[action]}
+              isLoggedIn={props.isLoggedIn}
+              handleLogIn={props.handleLogIn}
+              person={props.person}
+              handlePerson={props.handlePerson}
+            ></Login>
             <GoogleLogin
               clientId={clientId}
               render={(renderProps) => (

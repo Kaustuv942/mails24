@@ -7,7 +7,7 @@ import { FaSearch } from "react-icons/fa";
 
 const History = (props) => {
   //   console.log(data);
-  const person = props.user.data.user.email
+  //const person = props.user.data.user.email
   const [Data, setData] = useState(data);
   const [search, setSearch] = useState("");
   let dataArr = Data.filter((val) => {

@@ -5,7 +5,7 @@ import { Yearly } from "./Yearly";
 import { Weekly } from "./Weekly";
 import { Normal } from "./Normal";
 export const EmailForm = (props) => {
-  const person = props.user.data.user.email
+  //const person = props.user.data.user.email
   const [showRec, setshowRec] = useState(false);
   const [showWeek, setshowWeek] = useState(false);
   const [showMonth, setshowMonth] = useState(false);

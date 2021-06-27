@@ -10,7 +10,7 @@ const ComposePage = (props) => {
           purpose="redirect"
         />
       ) : (
-        <Compose user={props.user}/>
+        <Compose />
       )}
     </>
   );

@@ -8,6 +8,8 @@ const SignInPage = (props) => {
         <LoginPage
           isLoggedIn={props.isLoggedIn}
           handleLogIn={props.handleLogIn}
+          person={props.person}
+          handlePerson={props.handlePerson}
         />
       ) : (
         <Template

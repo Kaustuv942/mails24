@@ -10,6 +10,8 @@ const Navbar = (props) => {
   const closeMobileMenu = () => setClick(false);
 
   const handleLogout = () => {
+    const oj = {};
+    props.handlePerson(oj);
     props.handleLogIn();
   };
 
@@ -31,7 +33,7 @@ const Navbar = (props) => {
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
               <NavLink
-              exact
+                exact
                 to="/"
                 activeClassName="GG"
                 className="nav-links"
@@ -41,7 +43,8 @@ const Navbar = (props) => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink exact 
+              <NavLink
+                exact
                 to="/history"
                 className="nav-links"
                 activeClassName="GG"
@@ -51,7 +54,8 @@ const Navbar = (props) => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink exact 
+              <NavLink
+                exact
                 to="/compose"
                 className="nav-links"
                 onClick={closeMobileMenu}
@@ -71,7 +75,12 @@ const Navbar = (props) => {
                   Sign Up/Log In
                 </NavLink>
               ) : (
-                <NavLink  exact to="/" onClick={handleLogout} className="nav-links">
+                <NavLink
+                  exact
+                  to="/"
+                  onClick={handleLogout}
+                  className="nav-links"
+                >
                   Logout
                 </NavLink>
               )}

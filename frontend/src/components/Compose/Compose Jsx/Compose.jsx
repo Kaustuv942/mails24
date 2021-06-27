@@ -4,7 +4,7 @@ import { EmailForm } from "./EmailForm";
 export const Compose = (props) => {
   return (
     <div>
-      <EmailForm user={props.user}/>
+      <EmailForm />
     </div>
   );
 };

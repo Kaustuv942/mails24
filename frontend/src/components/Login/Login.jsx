@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import "./Login.css";
-import axios from 'axios'
+import axios from "axios";
+import { useHistory } from "react-router";
 
 const validate = (values) => {
   const errors = {};
@@ -19,6 +20,7 @@ const validate = (values) => {
 const baseURI = "http://localhost:8080/";
 
 const Login = (props) => {
+  const history = useHistory();
   let postPurpose;
   const purpose = props.btnwriteup;
   purpose === "Sign Up" ? (postPurpose = "signup") : (postPurpose = "login"); //whether the button is for signup or login
@@ -32,39 +34,50 @@ const Login = (props) => {
     onSubmit: (values) => {
       const check = `${baseURI}${postPurpose}`;
       console.log(check);
-      axios.post(`${baseURI}${postPurpose}`, values)
-      .then(function (response, error) {
-        console.log(response);
-        if(response.status === 200){
-            
-            if(postPurpose === "signup"){
-                alert('User Registered successfully') 
-            }  
-            else{
-                // alert('Login Successful')
-                props.handleLogIn(response)
+      axios
+        .post(`${baseURI}${postPurpose}`, values)
+        .then(function (response, error) {
+          console.log(response);
+          if (response.status === 200) {
+            if (postPurpose === "signup") {
+              alert("User Registered successfully");
+            } else {
+              history.replace("/");
+              // alert('Login Successful')
+              let dataObj = {
+                data: {
+                  user: {
+                    gId: null,
+                    id: response.data.user.id,
+                    email: response.data.user.email,
+                  },
+                },
+              };
+              console.log(dataObj);
+              props.handleLogIn();
+              props.handlePerson(dataObj);
+              history.replace("/");
             }
-        }else if(response.status === 204){
-          //User Already exists, can't register
-            alert("User Already exists, can't register")
-        }
-        else if(response.status === 209){
+          } else if (response.status === 204) {
+            //User Already exists, can't register
+            alert("User Already exists, can't register");
+          } else if (response.status === 209) {
             // password mismatch in login
-            alert('Password mismatch in login')
-        }
-        // else if(response.status === 203){
-        else{
-            alert("User doesn't exist, try again")
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-        // if(error.response.status === 401){
-        //     alert('Password mismatch in login')
-        // }
-      })
+            alert("Password mismatch in login");
+          }
+          // else if(response.status === 203){
+          else {
+            alert("User doesn't exist, try again");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          // if(error.response.status === 401){
+          //     alert('Password mismatch in login')
+          // }
+        });
       formik.resetForm();
-    //   alert(JSON.stringify(values, null, 2));
+      //   alert(JSON.stringify(values, null, 2));
     },
   });
   var emailErr;
