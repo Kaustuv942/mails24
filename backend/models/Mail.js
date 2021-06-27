@@ -26,5 +26,10 @@ const MailSchema = new Schema({
       type: String,
       required: true,
     },
+    uuid:{
+      type: String,
+      required: true,
+      unique: true
+    }
 });
 module.exports = Mail = mongoose.model('mail', MailSchema);

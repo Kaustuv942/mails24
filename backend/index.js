@@ -4,9 +4,12 @@ const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const schedule = require('node-schedule');
+const { v4: uuid } = require('uuid');
+
 
 const User = require('./models/User');
 const Mail = require('./models/Mail');
+const Job = require('./models/Job');
 
 let app = express();
 app.use(cors());
@@ -212,14 +215,15 @@ app.post('/api/compose', (req, res) => {
   }
   */
   const {to, from, cc, bcc, subject, text} = req.body.mail
-  const {type, start, max} = req.body.schedule
+  const {type, time, day, date, month, max} = req.body.schedule
   const newMail = new Mail({
     from,
     to,
     cc,
     bcc,
     subject,
-    text
+    text,
+    uuid
   });
   newMail.from = from
   newMail.to = to
@@ -227,14 +231,12 @@ app.post('/api/compose', (req, res) => {
   // newMail.bcc = bcc
   newMail.subject = subject
   newMail.text = text
+  newMail.uuid = uuid()
   const email = from
   User.findOne({email})
     .then(user => {
       console.log(from)
       console.log(user)
-      // if(!user){
-
-      // }
       if(!user.gId || user.gId == null){
         res.json({
           msg: "Gmail not synced!"
@@ -242,6 +244,18 @@ app.post('/api/compose', (req, res) => {
       }
       else{ 
         newMail.save()
+        const newJob = new Job({
+          uuid,
+          type,
+          // description,
+          // total          
+        });
+        newJob.uuid = newMail.uuid
+        newJob.description = "Mail will be sent at "+ time + day + date + month
+        newJob.type = type
+        newJob.total = max
+        newJob.save()
+        const taskId = newJob.uuid
         if(type === null){ // Instant Send
           // send mail 1 time
           transporter.sendMail({
@@ -262,44 +276,173 @@ app.post('/api/compose', (req, res) => {
           })
         }
         else if(type === 'Recurring'){      // Starting Now
-          // 
-          const taskId = "MY_CUSTOM_ID"
-          console.log('With Start-time')
-          const job = schedule.scheduleJob(taskId, '*/30 * * * * *', function () {
-            console.log('running campaign: ' + taskId)
-            transporter.sendMail({
-              from: newMail.from,
-              to: newMail.to,
-              cc: newMail.cc,
-              bcc: newMail.bcc,
-              subject: newMail.subject,
-              text: newMail.text,
-              auth: {
-                  user: user.email,
-                  accessToken: user.accessToken,
-              }
-            });
+          // str should resemble: '*/30 * * * * *'
+
+
+          var str = '*/' + time + ' * * * * *'
+          console.log(str)
+          const task = schedule.scheduleJob(taskId, str, function () {
+            const uuid = taskId
+            Job.findOne({uuid})
+              .then(job => {
+                if(Number(job.total) <= 0){
+                  let current_job = schedule.scheduledJobs[uuid]
+                  current_job.cancel()  
+                  Job.deleteOne({uuid})
+                }
+                else{
+                  console.log('running campaign: ' + taskId)
+                  transporter.sendMail({
+                    from: newMail.from,
+                    to: newMail.to,
+                    cc: newMail.cc,
+                    bcc: newMail.bcc,
+                    subject: newMail.subject,
+                    text: newMail.text,
+                    auth: {
+                        user: user.email,
+                        accessToken: user.accessToken,
+                    }
+                  });
+                  job.total = Number(job.total) - 1;
+                  console.log(job)
+                  job.save()
+                }
+              });
+            
           })
-          setTimeout(function(){ 
-            const campaignId = "MY_CUSTOM_ID"
-            let current_job = schedule.scheduledJobs[campaignId]
-            current_job.cancel()
-          }, 450000);
-          console.log(job)
-          res.json({
-            code: "OK"
+          res.status(200).json({
+            msg: "The mail will be sent at intervals of "+time+" seconds"
           })
           
         }
+        else if(type === 'Weekly'){          
+          const hrs = time.split(':')[0];  
+          const min = time.split(':')[1];  
+          str = min + ' ' + hrs + ' ' + '*' + ' ' + '*' + ' ' + day
+          console.log(str)
+          const task = schedule.scheduleJob(taskId, str, function () {
+            const uuid = taskId
+            Job.findOne({uuid})
+              .then(job => {
+                if(Number(job.total) <= 0){
+                  let current_job = schedule.scheduledJobs[uuid]
+                  current_job.cancel()  
+                  Job.deleteOne({uuid})
+                }
+                else{
+                  console.log('running campaign: ' + taskId)
+                  transporter.sendMail({
+                    from: newMail.from,
+                    to: newMail.to,
+                    cc: newMail.cc,
+                    bcc: newMail.bcc,
+                    subject: newMail.subject,
+                    text: newMail.text,
+                    auth: {
+                        user: user.email,
+                        accessToken: user.accessToken,
+                    }
+                  });
+                  job.total = Number(job.total) - 1;
+                  console.log(job)
+                  job.save()
+                }
+              });
+            
+          })
+          res.status(200).json({
+            msg: "The mail will be sent at Weekly intervals at" + hrs + min  + day
+          })
+        }
+        else if(type === 'Monthly'){          
+          const hrs = time.split(':')[0];  
+          const min =  time.split(':')[1];  
+          str = min + ' ' + hrs + ' ' + date + ' ' + '*' + ' ' + '*' 
+          console.log(str)
+          const task = schedule.scheduleJob(taskId, str, function () {
+            const uuid = taskId
+            Job.findOne({uuid})
+              .then(job => {
+                if(Number(job.total) <= 0){
+                  let current_job = schedule.scheduledJobs[uuid]
+                  current_job.cancel()  
+                  Job.deleteOne({uuid})
+                }
+                else{
+                  console.log('running campaign: ' + taskId)
+                  transporter.sendMail({
+                    from: newMail.from,
+                    to: newMail.to,
+                    cc: newMail.cc,
+                    bcc: newMail.bcc,
+                    subject: newMail.subject,
+                    text: newMail.text,
+                    auth: {
+                        user: user.email,
+                        accessToken: user.accessToken,
+                    }
+                  });
+                  job.total = Number(job.total) - 1;
+                  console.log(job)
+                  job.save()
+                }
+              });
+            
+          })
+          res.status(200).json({
+            msg: "The mail will be sent at monthly intervals at " + hrs + min + " on " + date
+          })
+        }
+        else if(type === 'Yearly'){          
+          const hrs = time.split(':')[0];
+          const min =  time.split(':')[1];  
+          str = min + ' ' + hrs + ' ' + date + ' '  + month + ' ' + '*'
+          console.log(str)
+          const task = schedule.scheduleJob(taskId, str, function () {
+            const uuid = taskId
+            Job.findOne({uuid})
+              .then(job => {
+                if(Number(job.total) <= 0){
+                  let current_job = schedule.scheduledJobs[uuid]
+                  current_job.cancel()  
+                  Job.deleteOne({uuid})
+                }
+                else{
+                  console.log('running campaign: ' + taskId)
+                  transporter.sendMail({
+                    from: newMail.from,
+                    to: newMail.to,
+                    cc: newMail.cc,
+                    bcc: newMail.bcc,
+                    subject: newMail.subject,
+                    text: newMail.text,
+                    auth: {
+                        user: user.email,
+                        accessToken: user.accessToken,
+                    }
+                  });
+                  job.total = Number(job.total) - 1;
+                  console.log(job)
+                  job.save()
+                }
+              });
+            
+          })
+          res.status(200).json({
+            msg: "The mail will be sent at Yearly intervals at " +months + date + hrs + min + " on " + date
+          })
+        }
         else{
-          res.json('Work In Progress')
-          console.log('With Start-time')
+          res.status(404).json({
+            msg: "configurations not found"
+          })
         }
       }
     });
   
   
-  //-> save to db(1), start cron job -> store cron-job,[, ]
+  //-> save to db(1), save to schedules, start cron job -> store cron-job,[, ]
   // next time of sending the mail db(1),
   // Store in history whenever a cron job is being done ~>
   // [History]db(2) (last time of sending, number of times sent till now, type of mail)
@@ -307,10 +450,18 @@ app.post('/api/compose', (req, res) => {
   // It is inserted into the schedule db with (next time of sending, type of sending, number of mails remaining)
 })
 
-var x= 1;
-var y = 1;
-const url_taskMap = {};
-const str = '* * * * * *'
+app.post('/api/delete/:taskId', (req, res) => {
+  var uuid = req.params.taskId
+  console.log(uuid)
+  // uuid = "abcd"
+  let current_job = schedule.scheduledJobs[uuid]
+  current_job.cancel()  
+  Job.deleteOne({uuid})
+  res.status(200).json({
+    jobId: uuid,
+    status: "Deleted"
+  })
+})
 // const task = cron.schedule(str,()=>{
 //     console.log('sendMail'+x)
 //     x+=1
