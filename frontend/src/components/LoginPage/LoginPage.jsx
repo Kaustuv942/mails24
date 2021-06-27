@@ -1,11 +1,13 @@
 import "./LoginPage.css";
 import Login from "../Login/Login";
 import { useState } from "react";
+import { useHistory, Redirect } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import Logo from "../../img/mail-send.png";
 // import axios from "axios";
 
 const LoginPage = (props) => {
+  const history = useHistory();
   const choices = ["Sign Up", "Log In"];
   const [action, setAction] = useState(0);
   const handleChoiceChange = () => {
@@ -24,10 +26,13 @@ const LoginPage = (props) => {
 
   const clientSecret = "uySD0RKc6VbMU9aHfbnunJfE";
 
-  const responseGoogleSuccess = (response) => {
-    console.log(response);
+  const ResponseGoogleSuccess = (response) => {
+    //console.log(response);
     props.handleLogIn();
-    console.log(props.isLoggedIn);
+    //console.log(props.isLoggedIn);
+
+    history.replace("/");
+    // return <Redirect to="/" />;
   };
 
   const responseGoogleFail = (response) => {
@@ -81,7 +86,7 @@ const LoginPage = (props) => {
                 </button>
               )}
               buttonText="Login"
-              onSuccess={responseGoogleSuccess}
+              onSuccess={ResponseGoogleSuccess}
               onFailure={responseGoogleFail}
               cookiePolicy={"single_host_origin"}
             />

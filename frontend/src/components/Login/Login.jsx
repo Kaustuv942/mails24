@@ -7,32 +7,52 @@ const validate = (values) => {
     errors.password = "Required";
   }
 
-  if (!values.username) {
-    errors.username = "Required";
-  } else if (
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.username)
-  ) {
-    errors.username = "Invalid email address";
+  if (!values.email) {
+    errors.email = "Required";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = "Invalid email address";
   }
   return errors;
 };
 
+const baseURI = "http://localhost:3000/";
+
 const Login = (props) => {
+  let postPurpose;
+  const purpose = props.btnwriteup;
+  purpose === "Sign Up" ? (postPurpose = "signup") : (postPurpose = "login"); //whether the button is for signup or login
+
   const formik = useFormik({
     initialValues: {
       password: "",
-      username: "",
+      email: "",
     },
     validate,
     onSubmit: (values) => {
+      const check = `${baseURI}${postPurpose}/`;
+      console.log(check);
+      // axios.post(`${baseURI}${postPurpose}/`,JSON.stringify(values, null, 2))
+      // .then(function (response) {
+      //   console.log(response);
+      //   if(response.statusCode===200){
+      //     //check purpose
+      //       //if purpose is signup display success message but dont redirect
+      //       //if purpose is login set isLoggedIn to true and redirect to homepage
+      //   }else{
+      //     //display reason for error but dont redirect
+      //   }
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // })
       formik.resetForm();
       alert(JSON.stringify(values, null, 2));
     },
   });
-  var usernameErr;
+  var emailErr;
   var passErr;
 
-  formik.errors.username ? (usernameErr = "redmarker") : (usernameErr = "");
+  formik.errors.email ? (emailErr = "redmarker") : (emailErr = "");
 
   formik.errors.password ? (passErr = "redmarker") : (passErr = "");
 
@@ -40,21 +60,21 @@ const Login = (props) => {
     <div className="container">
       <div className="row justify-content-center">
         <form onSubmit={formik.handleSubmit}>
-          <div className="username">
-            <label htmlFor="username" className="h6">
+          <div className="email">
+            <label htmlFor="email" className="h6">
               Username
             </label>
             <br />
             <input
-              id="username"
-              name="username"
+              id="email"
+              name="email"
               type="textarea"
               onChange={formik.handleChange}
-              value={formik.values.username}
-              className={usernameErr}
+              value={formik.values.email}
+              className={emailErr}
             />
-            {formik.errors.username ? (
-              <span className="error-message">{formik.errors.username}</span>
+            {formik.errors.email ? (
+              <span className="error-message">{formik.errors.email}</span>
             ) : null}
           </div>
           <br />
@@ -75,7 +95,7 @@ const Login = (props) => {
           ) : null}
           <br />
           <button type="submit" id="sub-btn" className="login-buttons">
-            {props.btnwriteup}
+            {purpose}
           </button>
         </form>
       </div>
