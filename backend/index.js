@@ -76,10 +76,9 @@ app.post("/signup", (req, res) => {
   console.log(req);
   User.findOne({ email }).then((user) => {
     if (user) {
-      res.status(204).json({
-        msg: "uae",
-      });
-      console.log("User already exists");
+        return res.status(403).json({
+          msg:"User Already Exists!"
+        })
     } else {
       const newUser = new User({
         email,
@@ -111,6 +110,9 @@ app.post("/signup", (req, res) => {
         });
       });
     }
+  })
+  .catch((err) =>{
+      console.log(err);
   });
 });
 
