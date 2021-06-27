@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const JobSchema = new Schema({
+const ScheduleSchema = new Schema({
     uuid:{
         type: String,
         required: true,
@@ -13,19 +13,11 @@ const JobSchema = new Schema({
     },
     description:{
         type: String,
-        required: true,
-    },
-    total:{
-        type: String,
-        required: true,
-    },   
-    max:{
-        type: String,
-        required: true
+        required: false,
     },
     author:{
         type: String,
         required: true,
-    }
+    }  
 });
-module.exports = Job = mongoose.model('job', JobSchema);
+module.exports = Schedule = mongoose.model('schedule', ScheduleSchema);

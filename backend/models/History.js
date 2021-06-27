@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const JobSchema = new Schema({
+const HistorySchema = new Schema({
     uuid:{
         type: String,
         required: true,
@@ -13,19 +13,15 @@ const JobSchema = new Schema({
     },
     description:{
         type: String,
-        required: true,
+        required: false,
     },
-    total:{
-        type: String,
+    lastSent:{
+        type: Date,
         required: true,
-    },   
-    max:{
-        type: String,
-        required: true
-    },
+    },  
     author:{
         type: String,
         required: true,
-    }
+    }  
 });
-module.exports = Job = mongoose.model('job', JobSchema);
+module.exports = History = mongoose.model('history', HistorySchema);

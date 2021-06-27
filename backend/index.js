@@ -10,6 +10,7 @@ const { v4: uuid } = require('uuid');
 const User = require('./models/User');
 const Mail = require('./models/Mail');
 const Job = require('./models/Job');
+const History = require('./models/History');
 
 let app = express();
 app.use(cors());
@@ -200,20 +201,6 @@ app.post('/api/gmailsync', (req, res) => {
 //compose message && scheduling
 
 app.post('/api/compose', (req, res) => {
-  /* Eg json
-  {
-    mail:{
-      to: ""
-      from: ""
-      cc...
-    }
-    schedule:{
-      type: "recurring/weekly/monthly/yearly"
-      start: "upto frontend peeps"
-      max: "no of max mails, Hard-Limit of 100"
-    }
-  }
-  */
   const {to, from, cc, bcc, subject, text} = req.body.mail
   const {type, time, day, date, month, max} = req.body.schedule
   const newMail = new Mail({
@@ -246,15 +233,21 @@ app.post('/api/compose', (req, res) => {
         newMail.save()
         const newJob = new Job({
           uuid,
-          type,
-          // description,
-          // total          
+          type        
         });
         newJob.uuid = newMail.uuid
-        newJob.description = "Mail will be sent at "+ time + day + date + month
+        if(type == "Recurring")
+          newJob.description = "Mail will be sent at intervals of: "+ time + "30s"
+        else{
+          newJob.description = "Mail will be sent at "+  + (time?" Time: "+ time: "")   +  (day?" Day: "+day: "")   + (date?"Date: "+date: "")  + (month?"Month: "+ month: "") 
+        }
+        
         newJob.type = type
         newJob.total = max
+        newJob.max = max
+        newJob.author = user.email
         newJob.save()
+
         const taskId = newJob.uuid
         if(type === null){ // Instant Send
           // send mail 1 time
@@ -307,6 +300,26 @@ app.post('/api/compose', (req, res) => {
                   job.total = Number(job.total) - 1;
                   console.log(job)
                   job.save()
+                  // History:
+                  History.findOne({uuid})
+                    .then(history => {
+                      if(!history){
+                        const newHistory = new History({
+                          uuid,
+                          type,
+                        });
+                        newHistory.uuid = job.uuid
+                        newHistory.type = job.type
+                        newHistory.description = job.description
+                        newHistory.lastSent = Date.now()
+                        newHistory.author = user.email
+                        newHistory.save()
+                      }
+                      else{
+                        history.lastSent = Date.now()
+                        history.save()
+                      }
+                    });
                 }
               });
             
@@ -347,6 +360,8 @@ app.post('/api/compose', (req, res) => {
                   job.total = Number(job.total) - 1;
                   console.log(job)
                   job.save()
+                  // history:
+
                 }
               });
             
@@ -462,76 +477,80 @@ app.post('/api/delete/:taskId', (req, res) => {
     status: "Deleted"
   })
 })
-// const task = cron.schedule(str,()=>{
-//     console.log('sendMail'+x)
-//     x+=1
-// });
-// url_taskMap['xyz'] = task;
-// const task3 = cron.schedule('*/3 * * * * *',()=>{
-//     console.log('3Seconds test'+x)
-//     x+=1
-// });
-// url_taskMap['xyz'] = task;
-// for some condition in some code
-// const stopper = cron.schedule(' */5 * * * * *',()=>{
-//     let my_job = url_taskMap['xyz'];
-//     console.log(my_job)
-//     console.log(url_taskMap)
-//     my_job.stop();
-//     console.log('Stopped the current task')
-// });
-// url_taskMap['3seconds'] = task3;
-
-// const stopper3 = cron.schedule(' */20 * * * * *',()=>{
-//     let my_job = url_taskMap['3seconds'];
-//     my_job.stop();
-//     console.log('Stopped the current task3')
-// });
-
-/* 
-POST REQ:
-/sendMail
-
----> mail info
----> mail scheduling(3 opts)
----> In each of the options:
-1. initialize the job 
-2. store it in the db as follows:
-a. url_taskmap --> 
-3. take the task and store it under the user's history of schedules:
-
-
-*/
-// const mailOptions = {
-//   from: 'personal.kkc942@gmail.com',
-//   to: 'kaustuv942@gmail.com',
-//   // cc:'kkc.19u10500@btech.nitdgp.ac.in',
-//   // bcc:'kaustuv942@gmail.com',
-//   subject: 'Flipr Mailer Works',
-//   text: 'Let us get this up and running'
-// };
-
-/// THIS WORKS::
-// transporter.sendMail({
-//   from: 'apsingh1843@gmail.com',
-//   to: 'kaustuv942@gmail.com',
-//   // cc:'kkc.19u10500@btech.nitdgp.ac.in',
-//   // bcc:'kaustuv942@gmail.com',
-//   subject: 'Flipr Mailer Works: Revision 2',
-//   text: 'Send Mail Api Works',
-//   auth: {
-//       user: 'apsingh1843@gmail.com',
-//     //   refreshToken: '1//04PeaRRxQepXfCgYIARAAGAQSNwF-L9IroDPofc1F4M8a0E-scC550DnVy5h_hOAs9WowULZYaUW42owSILtat4EYUK0YS-_5NKQ',
-//       accessToken: 'ya29.a0AfH6SMBgm-vsyqZ8zw9HHs4wX2V4zm3csaRmKTLWyDRDIhmf0AUlK02v3bbetDCC_tHcUhsxg1B-Sra913vwlXIWCCJ1N0XBqgJyo4PucRmyDKsOLGepkhs1STiprvOxcBJUPt5c_ZPXJsrgSHVNLPD850bL',
-      
-//       // expires: 1484314697598
-//   }
-// });
-
-
 
 //get history
 
+app.get('/api/history/:author', (req, res) => {
+  var author = req.params.author
+  History.find({author})
+    .then(history =>{
+      if(!author){
+        res.status(404).json({
+          msg: "No mails sent"
+        })
+      }
+      else{
+
+        res.status(200).json({
+          sent: history
+        })
+      }
+    })
+})
+
+// get body of a mail by uuid
+
+app.get('/api/mailbody/:uuid', (req, res) => {
+  var uuid = req.params.uuid
+  Mail.findOne({uuid})
+    .then(mails =>{    // mails
+      if(!mails){
+        res.status(204).json({
+          msg: "Mail not found!"
+        })
+      }
+      else{
+        res.status(200).json({
+          mails: mails
+        })
+      }
+    })
+})
+
 //get schedules
 
+app.get('/api/schedule/:author', (req, res) => {
+  var author = req.params.author
+  Job.find({author})
+    .then(jobs => {
+      if(!jobs){
+        res.status(204).json({
+          msg: "Schedules not found!"
+        })
+      }
+      else{
+        res.status(200).json({
+          schedule: jobs
+        })
+      }
+    })
+})
+
 //user-data
+
+app.get('/api/user/:email', (req, res) =>{
+  var email = req.params.email
+  User.findOne({email})
+    .then(user =>{
+      if(!user){
+        res.status(204).json({
+          msg: "No user found"
+        })
+      }
+      else{
+        res.status(200).json({
+          user: user
+        })
+      }
+    });
+})
