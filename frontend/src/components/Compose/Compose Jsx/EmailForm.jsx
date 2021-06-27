@@ -120,6 +120,7 @@ export const EmailForm = (props) => {
               <input
                 type="email"
                 className="recipient formItem"
+                placeholder="xyz@gmail.com , abc@gmail.com"
                 onChange={(e) => {
                   handleRecipientChange(e);
                 }}
@@ -130,6 +131,7 @@ export const EmailForm = (props) => {
               <input
                 type="text"
                 className="cc formItem"
+                placeholder="xyz@gmail.com , abc@gmail.com"
                 onChange={(e) => {
                   handleCCChange(e);
                 }}

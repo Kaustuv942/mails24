@@ -12,7 +12,7 @@
   inset: 0;
   z-index: -1;
   /* background-color: red; */
-  /* background-color: rgb(218, 216, 217); */
+  background-color: rgb(218, 216, 217);
 }
 .contHead {
   position: absolute;
@@ -122,7 +122,7 @@
   .searchIcon {
     transform: translate(0, 0);
     position: absolute;
-    z-index: 11;
+    z-index: 3;
     /* left: 26px; */
     top: 12px;
     left: 19px;

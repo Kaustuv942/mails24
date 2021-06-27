@@ -41,6 +41,7 @@ const LoginPage = (props) => {
 
   return (
     <div className="container">
+      <div className="templateCoverBg"></div>
       <div className="row justify-content-center">
         <div className="col-4 col-md-2 col-lg-1">
           <img src={Logo} alt="logo" className="img-fluid" />

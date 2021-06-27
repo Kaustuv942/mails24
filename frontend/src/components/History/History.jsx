@@ -2,6 +2,7 @@ import "./History.css";
 import React, { useState } from "react";
 import { HistoryContent } from "./HistoryContent";
 import data from "../data.json";
+import Modal from "../Modal/Modal";
 import { FaSearch } from "react-icons/fa";
 
 const History = (props) => {
@@ -22,10 +23,12 @@ const History = (props) => {
   }).map((res) => {
     return (
       <HistoryContent
-        name={res.name}
+        recipient={res.name}
         key={res.id}
         subject={res.subject}
         scheduled={res.scheduled}
+        cc={res.cc}
+        body={res.body}
       />
     );
   });

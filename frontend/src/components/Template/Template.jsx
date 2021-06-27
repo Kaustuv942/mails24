@@ -5,6 +5,7 @@ import TemplateBtn from "./TemplateBtn";
 const Template = (props) => {
   return (
     <div className="container" id="templateContainer">
+      <div className="templateCoverBg"></div>
       <div className="row justify-content-center">
         <div className="col-10 col-lg-4" id="description">
           <div className="row">

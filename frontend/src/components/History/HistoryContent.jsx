@@ -1,16 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import "./HistoryContent.css";
-export const HistoryContent = ({ name, id, subject, scheduled }) => {
+import Modal from "../Modal/Modal";
+export const HistoryContent = ({
+  recipient,
+  id,
+  cc,
+  body,
+  subject,
+  scheduled,
+}) => {
+  const [showModal, setShowModal] = useState(false);
+  const showModalFn = () => {
+    setShowModal(!showModal);
+    console.log(showModal);
+  };
   return (
-    <div className="contentCBox">
+    <div className="contentCBox" onClick={showModalFn}>
       <div className="recipientHistory">
-        <p>{name}</p>
+        <p>{recipient}</p>
       </div>
       <div className="subjectHistory">
         <p>{subject}</p>
       </div>
       <div className="scheduleHistory">
         <p>{scheduled}</p>
+      </div>
+      <div>
+        <Modal
+          setShowModal={setShowModal}
+          showModal={showModal}
+          recipient={recipient}
+          key={id}
+          subject={subject}
+          scheduled={scheduled}
+          cc={cc}
+          body={body}
+        />
       </div>
     </div>
   );
