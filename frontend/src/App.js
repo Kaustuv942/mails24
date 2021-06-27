@@ -1,7 +1,3 @@
-
-import { Home } from './components/Home/Home Jsx/Home';
-import {Compose} from './components/Compose/Compose Jsx/Compose'
-
 import "./App.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import SignInPage from "./components/LoginPage/SignInPage";
@@ -11,7 +7,6 @@ import HistoryPage from "./components/HistoryPage";
 import ComposePage from "./components/ComposePage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useState } from "react";
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

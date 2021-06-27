@@ -1,3 +1,4 @@
+import { Compose } from "./Compose/Compose Jsx/Compose";
 import Template from "./Template/Template";
 const ComposePage = (props) => {
   return (
@@ -9,7 +10,7 @@ const ComposePage = (props) => {
           purpose="redirect"
         />
       ) : (
-        <h1>Compose</h1>
+        <Compose />
       )}
     </>
   );

@@ -33,7 +33,7 @@ export const Yearly = ({ recipient, cc, subject, body }) => {
         }
       }
     }
-    if (body.length == 0) {
+    if (body.length === 0) {
       alert("Mail Body Cannot Be Empty");
       return false;
     } else {

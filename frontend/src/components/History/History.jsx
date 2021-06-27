@@ -1,10 +1,10 @@
+import "./History.css";
 import React, { useState } from "react";
-import "../Home css/Home.css";
-import { Content } from "./Content";
-import data from "../../data.json";
+import { HistoryContent } from "./HistoryContent";
+import data from "../data.json";
 import { FaSearch } from "react-icons/fa";
 
-export const Home = () => {
+const History = () => {
   //   console.log(data);
   const [Data, setData] = useState(data);
   const [search, setSearch] = useState("");
@@ -20,7 +20,7 @@ export const Home = () => {
     }
   }).map((res) => {
     return (
-      <Content
+      <HistoryContent
         name={res.name}
         key={res.id}
         subject={res.subject}
@@ -31,8 +31,8 @@ export const Home = () => {
 
   return (
     <div>
-      <div className="homeBackground"></div>
-      <div className="container mainContainer homeContainers">
+      <div className="historyBackground"></div>
+      <div className="container mainContainer historyContainers">
         <div className="search">
           <FaSearch className="searchIcon" />
           <input
@@ -43,11 +43,11 @@ export const Home = () => {
             placeholder="Search in mail.."
           />
         </div>
-        <div className="container homeContainer0 homeContainers">
+        <div className="container historyContainer0 historyContainers">
           <div className="contHead">
             <div className="recipientHead">Recipient</div>
             <div className="subjectHead">Subject of the mail</div>
-            <div className="scheduleHead">Scheduled For</div>
+            <div className="scheduleHead">Sent on</div>
           </div>
           <div className="content-box">{dataArr}</div>
         </div>
@@ -55,3 +55,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default History;

@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
 
-.homeContainer0 {
+.historyContainer0 {
   position: relative;
   min-height: 70vh;
   background-color: rgb(188, 188, 188);
   margin-top: 30px;
   border-radius: 10px;
 }
-.homeBackground {
+.historyBackground {
   position: fixed;
   inset: 0;
   z-index: -1;
@@ -64,7 +64,7 @@
   letter-spacing: 1px;
   height: 70%;
 }
-.homeContainers {
+.historyContainers {
   padding-top: 70px;
   padding-bottom: 20px;
 }
@@ -106,10 +106,10 @@
   .contHead {
     display: none;
   }
-  .homeContainers {
+  .historyContainers {
     padding-top: 10px;
   }
-  .homeContainer0 {
+  .historyContainer0 {
     padding-top: 15px !important;
   }
   .search {

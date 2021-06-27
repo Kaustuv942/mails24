@@ -77,7 +77,7 @@ export const EmailForm = () => {
   return (
     <div>
       <div className="emailBackground"></div>
-      <div className="container mainEmailContainer">
+      <div className="container mainEmailContainer composeContainer">
         <div className="buttons">
           <button
             className="choose RecBtn"
@@ -112,7 +112,7 @@ export const EmailForm = () => {
             Yearly
           </button>
         </div>
-        <div className="container formContainer">
+        <div className="container formContainer composeContainer">
           <form className="emailForm">
             <div className="recipientContainer">
               <p>Recipient</p>

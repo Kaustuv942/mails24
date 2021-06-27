@@ -1,4 +1,6 @@
 import Template from "./Template/Template";
+import History from "./History/History";
+
 const HistoryPage = (props) => {
   return (
     <>
@@ -9,7 +11,7 @@ const HistoryPage = (props) => {
           purpose="redirect"
         />
       ) : (
-        <h1>History</h1>
+        <History />
       )}
     </>
   );

@@ -1,4 +1,6 @@
 import Template from "./Template/Template";
+import { Home } from "./Home/Home Jsx/Home";
+
 const HomePage = (props) => {
   return (
     <>
@@ -9,7 +11,7 @@ const HomePage = (props) => {
           purpose="redirect"
         />
       ) : (
-        <h1>Home</h1>
+        <Home />
       )}
     </>
   );
