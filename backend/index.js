@@ -76,7 +76,7 @@ app.post("/signup", (req, res) => {
   console.log(req);
   User.findOne({ email }).then((user) => {
     if (user) {
-        return res.status(403).json({
+        return res.status(400).json({
           msg:"User Already Exists!"
         })
     } else {

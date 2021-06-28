@@ -1,0 +1,4 @@
+
+{
+    "mongoURI": "mongodb+srv://admin:admin@msgscheduler.r00cg.mongodb.net/FLIPRMSGSCHEDULER?retryWrites=true&w=majority"
+}
