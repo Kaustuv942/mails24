@@ -2,11 +2,9 @@ const express = require('express');
 const userRouter = express.Router();
 const userController = require('../../controllers/user.js');
 
-
-userRouter.get('/test', (req, res) => {
-    res.send('User route testing!')
-});
-
 userRouter.post('/signup', userController.signUp);
+userRouter.post('/login', userController.login);
+userRouter.post('/gsync',userController.gsync);
+userRouter.get('/userdata/:email',userController.userdata);
 
 module.exports=userRouter;

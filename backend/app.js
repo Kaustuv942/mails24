@@ -3,12 +3,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser=require('body-parser');
-const jwt = require("jsonwebtoken");
 const schedule = require("node-schedule");
 
 
 const userRouter = require('./routes/api/user')
-// const mailRouter = require('./routes/api/mail')
+const mailRouter = require('./routes/api/mail.js')
+const jobRouter = require('./routes/api/job.js')
 require('dotenv').config()
 
 const port = process.env.PORT || 8080;
@@ -49,8 +49,9 @@ app.use(bodyParser.json());
 
 
 app.use('/auth', userRouter);
+app.use('/mail', mailRouter);
+app.use('/job', jobRouter);
 app.get('/', (req, res) => res.send('Welcome to Mails24 backend!'));
-// app.use('/mail', mailRouter);
 
 
 app.listen(port, function () {
