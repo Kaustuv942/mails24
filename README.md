@@ -1,6 +1,10 @@
 # MAILS24
 Ever wanted to send and schedule mail/mails at some specific day, date, time of the year  with a click of a button? Here is a web app handcrafted make your life easier.
 
+![alt text](https://github.com/Kaustuv942/mails24/blob/master/public/1.JPG?raw=true)
+
+![alt text](https://github.com/Kaustuv942/mails24/blob/master/public/2.JPG?raw=true)
+
 ## Installation Guide
 
 To start the frontend: 
