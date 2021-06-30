@@ -1,12 +1,4 @@
 # MAILS24
-### Team Name: Devs24
-
-### Team Members: 
-- Avik Ghatak
-- Ramyanil Raha
-- Kaustuv Kanchan Chattopadhyay
-- Ayush Pratap Singh
-
 Ever wanted to send and schedule mail/mails at some specific day, date, time of the year  with a click of a button? Here is a web app handcrafted make your life easier.
 
 ## Installation Guide
@@ -126,4 +118,11 @@ History info of the sent mails
 - ### API endpoint: /auth/userdata/:email
 
 User info 
+### Team Name: Devs24
+
+### Team Members: 
+- Avik Ghatak
+- Ramyanil Raha
+- Kaustuv Kanchan Chattopadhyay
+- Ayush Pratap Singh
 
